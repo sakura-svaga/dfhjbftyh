@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ff6247">
+<title>Omlet Arcade | Community</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+ --orange:#ff6247;
+ --yellow:#ffc72c;
+ --bg:#0b0b10;
+}
+
+body{
+ min-height:100vh;
+ background:var(--bg);
+ color:white;
+ font-family:Arial,sans-serif;
+ overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+
+.background{
+ position:fixed;
+ inset:0;
+ z-index:-3;
+ background:
+ radial-gradient(ellipse at 50% 20%,#49201b 0%,transparent 48%),
+ radial-gradient(ellipse at 90% 90%,#271511 0%,transparent 45%),
+ #0b0b10;
+}
+
+.grain{
+ position:fixed;
+ inset:0;
+ z-index:-1;
+ opacity:.12;
+ pointer-events:none;
+ background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
+}
+
+.ambient{
+ position:fixed;
+ width:450px;
+ height:450px;
+ border-radius:50%;
+ background:#ff5636;
+ filter:blur(160px);
+ opacity:.14;
+ top:10%;
+ left:50%;
+ transform:translateX(-50%);
+ z-index:-2;
+ animation:ambient 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambient{
+ to{transform:translateX(-50%) scale(1.4);opacity:.22}
+}
+
+/* TOP BAR */
+
+header{
+ position:relative;
+ z-index:5;
+ width:100%;
+ padding:20px 6%;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ border-bottom:1px solid #ffffff0c;
+ background:#0b0b10a8;
+ backdrop-filter:blur(20px);
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ gap:11px;
+ font-weight:900;
+ letter-spacing:1px;
+ font-size:15px;
+}
+
+.brand-icon{
+ width:34px;
+ height:34px;
+ border-radius:11px;
+ background:var(--orange);
+ display:grid;
+ place-items:center;
+ color:white;
+ font-size:19px;
+ box-shadow:0 0 25px #ff624744;
+}
+
+.support-top{
+ padding:11px 18px;
+ border:1px solid #ff62475c;
+ border-radius:12px;
+ background:#ff624716;
+ color:#ff967f;
+ font-size:12px;
+ font-weight:bold;
+ transition:.3s;
+}
+
+.support-top:hover{
+ background:var(--orange);
+ color:white;
+ box-shadow:0 0 30px #ff624755;
+ transform:translateY(-2px);
+}
+
+/* MAIN */
+
+main{
+ width:min(100% - 36px,900px);
+ margin:auto;
+ padding:65px 0 40px;
+}
+
+/* HERO */
+
+.hero{
+ position:relative;
+ padding:55px 25px 48px;
+ border:1px solid #ffffff13;
+ border-radius:30px;
+ overflow:hidden;
+ text-align:center;
+ background:
+ linear-gradient(145deg,#ffffff0c,#ffffff02);
+ box-shadow:0 25px 90px #0007;
+ animation:heroEnter 1s ease both;
+}
+
+@keyframes heroEnter{
+ from{opacity:0;transform:translateY(35px) scale(.97)}
+ to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.hero::before{
+ content:"";
+ position:absolute;
+ width:350px;
+ height:350px;
+ border-radius:50%;
+ background:#ff6247;
+ filter:blur(120px);
+ opacity:.16;
+ left:50%;
+ top:-180px;
+ transform:translateX(-50%);
+}
+
+.hero::after{
+ content:"";
+ position:absolute;
+ width:70%;
+ height:1px;
+ top:0;
+ left:15%;
+ background:linear-gradient(90deg,transparent,#ff937c,transparent);
+}
+
+.status{
+ display:inline-flex;
+ align-items:center;
+ gap:8px;
+ padding:8px 14px;
+ border-radius:30px;
+ border:1px solid #ffffff18;
+ background:#ffffff08;
+ color:#c8b9b6;
+ font-size:10px;
+ letter-spacing:2px;
+ position:relative;
+}
+
+.status-dot{
+ width:7px;
+ height:7px;
+ background:#68e5a1;
+ border-radius:50%;
+ box-shadow:0 0 12px #68e5a1;
+ animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+ 50%{opacity:.35;transform:scale(.7)}
+}
+
+.logo{
+ position:relative;
+ margin:30px auto 25px;
+ width:150px;
+ height:150px;
+ display:grid;
+ place-items:center;
+ border-radius:42px;
+ background:linear-gradient(145deg,#ff795e,#ee442d);
+ box-shadow:
+ 0 25px 65px #ff624738,
+ inset 0 2px 2px #ffffff55;
+ animation:logoFloat 5s ease-in-out infinite;
+}
+
+@keyframes logoFloat{
+ 50%{transform:translateY(-10px) rotate(2deg)}
+}
+
+.logo svg{
+ width:125px;
+ height:110px;
+}
+
+h1{
+ position:relative;
+ font-size:clamp(35px,8vw,62px);
+ font-weight:950;
+ letter-spacing:-3px;
+}
+
+h1 span{
+ color:var(--orange);
+ text-shadow:0 0 35px #ff624744;
+}
+
+.subtitle{
+ position:relative;
+ margin:15px auto 0;
+ max-width:440px;
+ color:#aaa4aa;
+ font-size:14px;
+ line-height:1.8;
+}
+
+.hero-bottom{
+ position:relative;
+ margin-top:30px;
+ display:flex;
+ justify-content:center;
+ gap:10px;
+ flex-wrap:wrap;
+}
+
+.tag{
+ padding:9px 14px;
+ border-radius:10px;
+ background:#ffffff08;
+ border:1px solid #ffffff10;
+ color:#b7aeb1;
+ font-size:11px;
+}
+
+/* SECTION */
+
+.section-heading{
+ margin:40px 0 17px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.section-heading h2{
+ font-size:17px;
+ letter-spacing:.3px;
+}
+
+.section-heading span{
+ font-size:10px;
+ color:#77717a;
+ letter-spacing:2px;
+}
+
+/* BUTTONS */
+
+.links{
+ display:grid;
+ grid-template-columns:1fr;
+ gap:13px;
+}
+
+.link-card{
+ position:relative;
+ display:flex;
+ align-items:center;
+ gap:17px;
+ min-height:88px;
+ padding:17px 20px;
+ overflow:hidden;
+ border:1px solid #ffffff12;
+ border-radius:19px;
+ background:linear-gradient(110deg,#ffffff0b,#ffffff03);
+ transition:transform .3s,border-color .3s,background .3s;
+ animation:cardEnter .8s both;
+}
+
+.link-card:nth-child(2){animation-delay:.12s}
+.link-card:nth-child(3){animation-delay:.24s}
+
+@keyframes cardEnter{
+ from{opacity:0;transform:translateY(20px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+.link-card::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:linear-gradient(100deg,#ff624720,transparent 70%);
+ opacity:0;
+ transition:.3s;
+}
+
+.link-card:hover{
+ transform:translateY(-4px);
+ border-color:#ff765a88;
+ background:#ffffff0b;
+ box-shadow:0 15px 40px #0005;
+}
+
+.link-card:hover::before{opacity:1}
+
+.link-icon{
+ position:relative;
+ flex-shrink:0;
+ width:49px;
+ height:49px;
+ display:grid;
+ place-items:center;
+ border-radius:15px;
+ background:#ff62471c;
+ color:#ff967e;
+ font-size:23px;
+}
+
+.link-info{
+ position:relative;
+ flex:1;
+}
+
+.link-info strong{
+ display:block;
+ font-size:16px;
+ margin-bottom:6px;
+}
+
+.link-info small{
+ color:#918a94;
+ font-size:12px;
+}
+
+.arrow{
+ position:relative;
+ font-size:27px;
+ color:#777;
+ transition:.3s;
+}
+
+.link-card:hover .arrow{
+ color:var(--orange);
+ transform:translateX(6px);
+}
+
+/* FOOTER */
+
+footer{
+ margin-top:45px;
+ padding:25px 0;
+ border-top:1px solid #ffffff10;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ color:#716b75;
+ font-size:10px;
+ letter-spacing:1.5px;
+}
+
+footer b{color:var(--orange)}
+
+/* PARTICLES */
+
+.particle{
+ position:fixed;
+ bottom:-20px;
+ width:3px;
+ height:3px;
+ border-radius:50%;
+ background:#ff886d;
+ box-shadow:0 0 12px #ff6247;
+ pointer-events:none;
+ animation:rise linear infinite;
+ z-index:-1;
+}
+
+@keyframes rise{
+ to{transform:translateY(-110vh) translateX(60px);opacity:0}
+}
+
+/* TRANSITION */
+
+.transition{
+ position:fixed;
+ inset:0;
+ z-index:100;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:20px;
+ background:#0b0b10;
+ opacity:0;
+ visibility:hidden;
+ transition:opacity .35s,visibility .35s;
+}
+
+.transition.active{
+ opacity:1;
+ visibility:visible;
+}
+
+.loader-logo{
+ width:75px;
+ height:75px;
+ display:grid;
+ place-items:center;
+ border-radius:23px;
+ background:var(--orange);
+ font-size:35px;
+ animation:loaderPulse .8s ease-in-out infinite alternate;
+}
+
+@keyframes loaderPulse{
+ to{transform:scale(1.1) rotate(5deg);box-shadow:0 0 55px #ff624766}
+}
+
+.loader-line{
+ width:120px;
+ height:3px;
+ border-radius:5px;
+ background:#ffffff15;
+ overflow:hidden;
+}
+
+.loader-line::after{
+ content:"";
+ display:block;
+ height:100%;
+ width:40%;
+ background:var(--orange);
+ animation:loading .9s ease-in-out infinite;
+}
+
+@keyframes loading{
+ from{transform:translateX(-120%)}
+ to{transform:translateX(300%)}
+}
+
+.transition p{
+ color:#aaa;
+ font-size:11px;
+ letter-spacing:3px;
+}
+
+@media(min-width:650px){
+ .links{grid-template-columns:repeat(3,1fr)}
+ .link-card{
+  flex-direction:column;
+  align-items:flex-start;
+  min-height:180px;
+  padding:23px;
+ }
+ .arrow{align-self:flex-end}
+}
+
+@media(max-width:450px){
+ header{padding:16px 18px}
+ .brand{font-size:12px}
+ .support-top{padding:10px 12px;font-size:10px}
+ main{padding-top:35px}
+ .hero{padding:40px 17px}
+ footer{font-size:8px}
+}
+
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{
+  animation:none!important;
+  transition:none!important;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="ambient"></div>
+<div class="grain"></div>
+
+<header>
+ <div class="brand">
+  <div class="brand-icon">◉</div>
+  OMLET ARCADE
+ </div>
+
+ <a class="support-top external"
+ href="https://t.me/CMETAHA_36RAZRAD">
+  ✦ ТЕХПОДДЕРЖКА
+ </a>
+</header>
+
+<main>
+
+ <section class="hero">
+
+  <div class="status">
+   <span class="status-dot"></span>
+   COMMUNITY PROJECT
+  </div>
+
+  <div class="logo">
+   <svg viewBox="0 0 160 130">
+    <path d="M25 18 C12 18 7 34 5 55 L1 91 C-1 112 17 120 32 106 L56 88 L104 88 L128 106 C143 120 161 112 159 91 L155 55 C153 34 148 18 135 18Z" fill="white"/>
+    <path d="M35 42 V76 M18 59 H52" stroke="#ff6247" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="119" cy="45" r="10" fill="#ffc72c"/>
+   </svg>
+  </div>
+
+  <h1>OMLET <span>ARCADE</span></h1>
+
+  <p class="subtitle">
+   Модифицированный фанатский живой Omlet Arcade.
+   Возвращаем атмосферу игрового сообщества.
+  </p>
+
+  <div class="hero-bottom">
+   <div class="tag">✦ FAN PROJECT</div>
+   <div class="tag">◉ COMMUNITY</div>
+   <div class="tag">⚡ ARCADE</div>
+  </div>
+
+ </section>
+
+ <div class="section-heading">
+  <h2>Быстрый доступ</h2>
+  <span>EXPLORE</span>
+ </div>
+
+ <section class="links">
+
+  <a class="link-card external"
+   href="https://t.me/omletnew">
+   <div class="link-icon">↻</div>
+   <div class="link-info">
+    <strong>Обновления</strong>
+    <small>Новые версии и новости</small>
+   </div>
+   <div class="arrow">↗</div>
+  </a>
+
+  <a class="link-card external"
+   href="https://t.me/omletynety/1">
+   <div class="link-icon">✉</div>
+   <div class="link-info">
+    <strong>Чат сообщества</strong>
+    <small>Общение с участниками</small>
+   </div>
+   <div class="arrow">↗</div>
+  </a>
+
+  <a class="link-card external"
+   href="https://t.me/omletynety/5777">
+   <div class="link-icon">?</div>
+   <div class="link-info">
+    <strong>Техподдержка</strong>
+    <small>Помощь и решение проблем</small>
+   </div>
+   <div class="arrow">↗</div>
+  </a>
+
+ </section>
+
+ <footer>
+  <div>OMLET ARCADE <b>●</b> FAN PROJECT</div>
+  <div>MADE FOR COMMUNITY</div>
+ </footer>
+
+</main>
+
+<div class="transition" id="transition">
+ <div class="loader-logo">◉</div>
+ <div class="loader-line"></div>
+ <p>OPENING TELEGRAM...</p>
+</div>
+
+<script>
+// Floating particles
+for(let i=0;i<22;i++){
+ const p=document.createElement('div');
+ p.className='particle';
+ p.style.left=Math.random()*100+'%';
+ p.style.animationDuration=(7+Math.random()*12)+'s';
+ p.style.animationDelay=(-Math.random()*15)+'s';
+ p.style.opacity=.2+Math.random()*.6;
+ document.body.appendChild(p);
+}
+
+// Animated link opening
+document.querySelectorAll('.external').forEach(link=>{
+ link.addEventListener('click',function(e){
+  if(e.ctrlKey || e.metaKey || e.button===1)return;
+
+  e.preventDefault();
+  const url=this.href;
+  const screen=document.getElementById('transition');
+
+  screen.classList.add('active');
+
+  setTimeout(()=>{
+   window.location.href=url;
+  },650);
+ });
+});
+</script>
+
+</body>
+</html>
